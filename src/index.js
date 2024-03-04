@@ -1,4 +1,9 @@
 import './style.css';
+
+function $(selector) {
+  return document.querySelector(selector);
+}
+
 function createTeamRequest(team) {
   fetch('http://localhost:3000/teams-json/create', {
     method: 'POST',
@@ -9,6 +14,18 @@ function createTeamRequest(team) {
   });
 }
 
+function deleteTeamRequest() {
+  fetch('http://localhost:3000/teams-json/create', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ id: id }),
+  });
+}
+// make delete teamRequest available from global context3
+window.deleteTeamRequest = deleteTeamRequest;
+
 //console.warn('app ready');
 
 function getTeamAsHTML(team) {
@@ -17,7 +34,9 @@ function getTeamAsHTML(team) {
     <td>${team.members}</td>
     <td>${team.name}</td>
     <td>${team.url}</td>
-    <td>x</td>
+    <td>
+    <a href="#" onclick="deleteTeamRequest(${team.id})">X</a>
+    </td>
   </tr>`;
 }
 
@@ -38,10 +57,6 @@ function loadTeams() {
     });
 
   //console.warn('loadTeams', promise);
-}
-
-function $(selector) {
-  return document.querySelector(selector);
 }
 
 function getFormValues() {
