@@ -29,6 +29,26 @@ section {
   flex: 1;
 }
 
+#teamsTable {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#teamsTable th,
+#teamsTable td {
+  border: 1px solid #057988;
+  padding: 5px;
+}
+
+#teamsTable th {
+  background-color: #0798ab;
+  color: white;
+}
+
+#teamsTable tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
 footer {
   text-align: center;
   padding: 5px;
