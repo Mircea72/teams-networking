@@ -14,8 +14,8 @@ function createTeamRequest(team) {
   });
 }
 
-function deleteTeamRequest() {
-  fetch('http://localhost:3000/teams-json/create', {
+function deleteTeamRequest(id) {
+  fetch('http://localhost:3000/teams-json/delete', {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -23,8 +23,6 @@ function deleteTeamRequest() {
     body: JSON.stringify({ id: id }),
   });
 }
-// make delete teamRequest available from global context3
-window.deleteTeamRequest = deleteTeamRequest;
 
 //console.warn('app ready');
 
@@ -35,7 +33,7 @@ function getTeamAsHTML(team) {
     <td>${team.name}</td>
     <td>${team.url}</td>
     <td>
-    <a href="#" onclick="deleteTeamRequest(${team.id})">X</a>
+    <a href="#" data-id="${team.id}">✖</a>
     </td>
   </tr>`;
 }
@@ -43,9 +41,9 @@ function getTeamAsHTML(team) {
 function renderTeams(teams) {
   //console.warn('render', teams);
   const teamsHTML = teams.map(getTeamAsHTML);
-  //console.info(te{amsHTML);
+  //console.info(teamsHTML);
 
-  document.querySelector('#teamsTable tbody').innerHTML = teamsHTML.join('');
+  $('#teamsTable tbody').innerHTML = teamsHTML.join('');
 }
 
 function loadTeams() {
@@ -62,27 +60,28 @@ function loadTeams() {
 function getFormValues() {
   return {
     promotion: $('input[name=promotion]').value,
-    members: $('input[name=promotion]').value,
-    name: 'input[name=promotion]'.value,
-    url: 'input[name=promotion]'.value,
+    members: $('input[name=members]').value,
+    name: 'input[name=name]'.value,
+    url: 'input[name=url]'.value,
   };
 }
 
 function onSubmit(e) {
   e.preventDefault();
-  console.warn('pls save all values');
-  let team = {
-    promotion: 'WON3',
-    members: 'Your Name',
-    name: 'CV',
-    url: 'https://github.com/nmatei/teams-networking',
-  };
+  let team = getFormValues();
   createTeamRequest(team);
   window.location.reload();
 }
 
 function initEvents() {
   $('#teamsForm').addEventListener('submit', onSubmit);
+  $('#teamsTable tbody').addEventListener('click', e => {
+    if (e.target.matches('a')) {
+      const id = e.target.dataset.id;
+      deleteTeamRequest(id);
+      window.location.reload();
+    }
+  });
 }
 
 initEvents();
