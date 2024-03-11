@@ -61,8 +61,8 @@ function getFormValues() {
   return {
     promotion: $('input[name=promotion]').value,
     members: $('input[name=members]').value,
-    name: 'input[name=name]'.value,
-    url: 'input[name=url]'.value,
+    name: $('input[name=name]').value,
+    url: $('input[name=url]').value,
   };
 }
 
