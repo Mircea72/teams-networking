@@ -92,14 +92,18 @@ function onSubmit(e) {
     const req = updateTeamRequest(team);
     const response = req.then(r => r.json());
     response.then(status => {
-      console.warn('status', status);
       if (status.success) {
         window.location.reload();
       }
     });
   } else {
-    createTeamRequest(team);
-    window.location.reload();
+    const req = createTeamRequest(team);
+    const response = req.then(r => r.json());
+    response.then(status => {
+      if (status.success) {
+        window.location.reload();
+      }
+    });
   }
 }
 
