@@ -8,7 +8,7 @@ function $(selector) {
 }
 
 function createTeamRequest(team) {
-  fetch('http://localhost:3000/teams-json/create', {
+  return fetch('http://localhost:3000/teams-json/create', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
